@@ -3,6 +3,8 @@
 #ifndef INCLUDE_TIMEDDOOR_H_
 #define INCLUDE_TIMEDDOOR_H_
 
+#include <thread>
+
 class DoorTimerAdapter;
 class Timer;
 class Door;
@@ -29,11 +31,15 @@ class DoorTimerAdapter : public TimerClient {
 };
 
 class TimedDoor : public Door {
+  friend class DoorTimerAdapter;
  private:
   DoorTimerAdapter * adapter;
   int iTimeout;
   bool isOpened;
+  bool isThrowen = false;
+  std::thread* timer_thread = nullptr;
  public:
+  ~TimedDoor();
   explicit TimedDoor(int);
   bool isDoorOpened();
   void unlock();
