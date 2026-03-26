@@ -8,32 +8,32 @@
 #include "TimedDoor.h"
 
 class MockTimerClient : public TimerClient {
-    public:
-        MOCK_METHOD(void, Timeout, (), (override));
+ public:
+    MOCK_METHOD(void, Timeout, (), (override));
 };
 
 class MockDoor : public Door {
-    public:
-        MOCK_METHOD(bool, isDoorOpened, (), (override));
-        MOCK_METHOD(void, lock, (), (override));
-        MOCK_METHOD(void, unlock, (), (override));
+ public:
+    MOCK_METHOD(bool, isDoorOpened, (), (override));
+    MOCK_METHOD(void, lock, (), (override));
+    MOCK_METHOD(void, unlock, (), (override));
 };
 
 class TimedDoorTest : public ::testing::Test {
-    protected:
-        TimedDoor* door;
-        DoorTimerAdapter* adapter;
+ protected:
+    TimedDoor* door;
+    DoorTimerAdapter* adapter;
 
-        void SetUp() override {
-            door = new TimedDoor(500);
-            adapter = new DoorTimerAdapter(*door);
-            door->lock();
-        }
+    void SetUp() override {
+        door = new TimedDoor(500);
+        adapter = new DoorTimerAdapter(*door);
+        door->lock();
+    }
 
-        void TearDown() override {
-            delete adapter;
-            delete door;
-        }
+    void TearDown() override {
+        delete adapter;
+        delete door;
+    }
 };
 
 
@@ -115,7 +115,7 @@ TEST_F(TimedDoorTest, RegitsterWithNullDoesntThrow) {
 
 TEST_F(TimedDoorTest, MultipleAdapters) {
     TimedDoor door(0);
-    
+
     door.lock();
 
     DoorTimerAdapter ad1(door);

@@ -13,7 +13,9 @@ void DoorTimerAdapter::Timeout() {
     }
 }
 
-TimedDoor::TimedDoor(int timeoutVal) : adapter(new DoorTimerAdapter(*this)), iTimeout(timeoutVal), isOpened(false) {}
+TimedDoor::TimedDoor(int timeoutVal) : 
+    adapter(new DoorTimerAdapter(*this)), 
+    iTimeout(timeoutVal), isOpened(false) {}
 
 TimedDoor::~TimedDoor() {
     if (timer_thread) {
@@ -59,7 +61,7 @@ void Timer::sleep(int timeout) {
     }
 }
 
-void Timer::tregister (int timeout, TimerClient *timerClient) {
+void Timer::tregister(int timeout, TimerClient *timerClient) {
     client = timerClient;
     if (timeout > 0) {
         sleep(timeout);
